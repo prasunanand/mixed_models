@@ -45,9 +45,11 @@ class NMatrix
     n = self.shape[0]
     raise NotImplementedError, "Both matrices must have the same number of rows" unless n==mat.shape[0]
     m = self.shape[1]*mat.shape[1]
-    prod_dtype = NMatrix.upcast(self.dtype, mat.dtype)
+    prod_dtype = mat
+    # NMatrix.upcast(self.dtype, mat.dtype)
     khrao_prod = NMatrix.new([n,m], dtype: prod_dtype)
     (0...n).each do |i|
+      puts self.row(i).class
       kronecker_prod = self.row(i).kron_prod_1D mat.row(i)
       khrao_prod[i,0...m] = kronecker_prod
     end

@@ -1,7 +1,7 @@
 # Copyright (c) 2015 Alexej Gossmann 
 
-require 'nmatrix/nmatrix'
-require 'nmatrix/lapack_plugin'
+require_relative '../ext/nmatrix/lib/nmatrix.rb'
+# require 'nmatrix/lapack_plugin'
 require 'daru'
 require 'distribution'
 

@@ -19,7 +19,7 @@ describe LMM do
     describe constructor_method do
       context "with numeric and categorical fixed effects and numeric random effects" do
 
-        let(:df) { Daru::DataFrame.from_csv("spec/data/alien_species.csv") }
+        let(:df) { Daru::DataFrame.from_csv("./data/alien_species.csv") }
 
         context "using REML deviance" do
 
@@ -87,7 +87,7 @@ describe LMM do
 
           it "has no side effects on the input parameters" do
             reml = true
-            df_unaltered = Daru::DataFrame.from_csv("spec/data/alien_species.csv")
+            df_unaltered = Daru::DataFrame.from_csv("./data/alien_species.csv")
             weights = Array.new(df_unaltered.nrows) { 1.0 }
             offset = 0.0
             start_point = [1.0, 0.5, 1.0]
@@ -117,7 +117,7 @@ describe LMM do
             end
 
             expect(reml).to eq(true)
-            expect(Daru::DataFrame.from_csv("spec/data/alien_species.csv")).to eq(df_unaltered)
+            expect(Daru::DataFrame.from_csv("./data/alien_species.csv")).to eq(df_unaltered)
             expect(Array.new(df_unaltered.nrows) { 1.0 }).to eq(weights)
             expect(offset).to eq(0.0)
             expect(start_point).to eq([1.0, 0.5, 1.0])
@@ -190,7 +190,7 @@ describe LMM do
   ["#from_formula", "#from_daru"].each do |constructor_method|
     context "when model obtained via #{constructor_method}" do
       context "with numeric and categorical fixed effects and numeric random effects" do
-        let(:df) { Daru::DataFrame.from_csv("spec/data/alien_species.csv") }
+        let(:df) { Daru::DataFrame.from_csv("./data/alien_species.csv") }
 
         subject(:model_fit) do
           case constructor_method
@@ -1165,7 +1165,7 @@ describe LMM do
 
             context "when models were not fit to the same data" do
               let(:full_model) do 
-                data =  Daru::DataFrame.from_csv("spec/data/alien_species.csv") 
+                data =  Daru::DataFrame.from_csv("./data/alien_species.csv") 
                 case constructor_method
                 when "#from_formula"
                   LMM.from_formula(formula: "Aggression ~ Species + (1 | Location)", 
