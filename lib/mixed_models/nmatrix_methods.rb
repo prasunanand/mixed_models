@@ -49,7 +49,7 @@ class NMatrix
     # NMatrix.upcast(self.dtype, mat.dtype)
     khrao_prod = NMatrix.new([n,m], dtype: prod_dtype)
     (0...n).each do |i|
-      puts self.row(i).class
+      # puts self.row(i).class
       kronecker_prod = self.row(i).kron_prod_1D mat.row(i)
       khrao_prod[i,0...m] = kronecker_prod
     end
