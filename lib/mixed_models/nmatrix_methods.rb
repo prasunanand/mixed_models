@@ -77,9 +77,9 @@ class NMatrix
     b = rhs.clone
     # this is the correct function call; it came up in during
     # discussion in https://github.com/SciRuby/nmatrix/issues/374
-    NMatrix::BLAS::cblas_trsm(:row, :left, uplo, false, :nounit, 
-                              b.shape[0], b.shape[1], 1.0, self, self.shape[0],
-                              b, b.shape[1])
+    # NMatrix::BLAS::cblas_trsm(:row, :left, uplo, false, :nounit, 
+    #                           b.shape[0], b.shape[1], 1.0, self, self.shape[0],
+    #                           b, b.shape[1])
     return b
   end
 end
