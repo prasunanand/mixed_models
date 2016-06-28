@@ -389,7 +389,9 @@ class LMM
 
     # define the starting point for the optimization (if it's nil),
     # such that random effects are independent with variances equal to one
-    q = num_ran_ef.sum
+    # puts num_ran_ef.class
+    q = 0
+    num_ran_ef.each { |a| q+=a }
     if start_point.nil? then
       tmp1 = Array.new(q) {1.0}
       tmp2 = Array.new(q*(q-1)/2) {0.0}

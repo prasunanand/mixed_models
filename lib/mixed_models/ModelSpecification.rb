@@ -153,7 +153,10 @@ module MixedModels
       # the covariance matrix
       th_count_diag = 0 
       # the remaining theta parametrize the off-diagonal entries of the covariance matrix
-      th_count = num_ran_ef.sum 
+      th_count = 0
+      num_ran_ef.each { |a| th_count+=a }
+ 
+
       num_grp_levels.each_index do |i|
         k = num_ran_ef[i]
         m = num_grp_levels[i]
