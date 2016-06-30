@@ -20,7 +20,7 @@ File.open(with_header, 'w') do |fo|
     fo.puts li
   end
 end
-
+puts "line 23"
 # load the data with daru
 require 'daru'
 df = Daru::DataFrame.from_csv './data/blogData_train_with_header.csv'
@@ -28,21 +28,24 @@ df = Daru::DataFrame.from_csv './data/blogData_train_with_header.csv'
 # select a subset of columns of the data frame
 keep = [:v16, :v41, :v54, :v62, :v270, :v271, :v272, 
         :v273, :v274, :v275, :v276, :v277, :v280]
+puts "line 33"
 blog_data = df[*keep]
 df = nil
+puts "line 33"
 
 # assign meaningful names for those columns
 meaningful_names = [:host_comments_avg, :host_trackbacks_avg, 
                     :comments, :length, :mo, :tu, :we, :th, 
                     :fr, :sa, :su, :parents, :parents_comments]
 blog_data.vectors = Daru::Index.new(meaningful_names)
+puts "line 40"
 
 # extract observations with text length >0 and >0 comments
 nonzero_ind = blog_data[:length].each_index.select do |i| 
   blog_data[:length][i] > 0 && blog_data[:comments][i] > 0
 end
 blog_data = blog_data.row[*nonzero_ind]
-
+puts "line 47"
 # combine the seven day-of-week columns into one column;
 # and remove the seven columns
 days = Array.new(blog_data.nrows) { :unknown }
@@ -52,7 +55,7 @@ days = Array.new(blog_data.nrows) { :unknown }
   blog_data.delete_vector(d)
 end
 blog_data[:day] = days
-
+puts "line 57"
 # create a binary indicator vector specifying if a blog post has at least 
 # one parent post which has comments
 hpwc = (blog_data[:parents] * blog_data[:parents_comments]).to_a
@@ -65,7 +68,7 @@ log_comments = blog_data[:comments].to_a.map { |c| Math::log(c) }
 log_host_comments_avg = blog_data[:host_comments_avg].to_a.map { |c| Math::log(c) }
 blog_data[:log_comments] = log_comments
 blog_data[:log_host_comments_avg] = log_host_comments_avg
-
+puts "line 70"
 # fit a LMM
 require 'mixed_models'
 model_fit = LMM.from_formula(formula: "log_comments ~ log_host_comments_avg + host_trackbacks_avg + length + has_parent_with_comments + (1 | day)", 

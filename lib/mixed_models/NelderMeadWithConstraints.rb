@@ -183,6 +183,7 @@ module MixedModels
     # in the simplex from best to worst
     def evaluate_simplex
       # evaluate the objective function at all non-evaluated simplex points
+      # puts @simplex.inspect
       @simplex.each_with_index do |v,i|
         @simplex[i].value = f(v.point) if v.value.nan?
       end

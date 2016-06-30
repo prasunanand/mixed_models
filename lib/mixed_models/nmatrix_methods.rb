@@ -2,6 +2,10 @@
 
 class NMatrix
 
+  def jruby?
+    /java/ === RUBY_PLATFORM
+  end
+
   # Compute the the Kronecker product of two row vectors (NMatrix of shape [1,n])
   #
   # === Arguments
@@ -52,6 +56,7 @@ class NMatrix
       # puts self.row(i).class
       kronecker_prod = self.row(i).kron_prod_1D mat.row(i)
       khrao_prod[i,0...m] = kronecker_prod
+      # puts khrao_prod
     end
     return khrao_prod
   end
@@ -75,11 +80,18 @@ class NMatrix
   def triangular_solve(uplo, rhs)
     raise(ArgumentError, "uplo should be :lower or :upper") unless uplo == :lower or uplo == :upper
     b = rhs.clone
-    # this is the correct function call; it came up in during
-    # discussion in https://github.com/SciRuby/nmatrix/issues/374
-    # NMatrix::BLAS::cblas_trsm(:row, :left, uplo, false, :nounit, 
-    #                           b.shape[0], b.shape[1], 1.0, self, self.shape[0],
-    #                           b, b.shape[1])
-    return b
+    if jruby?
+      # puts self
+      # puts b
+      # puts self.matrix_solve b
+      return self.matrix_solve b
+    else
+      # this is the correct function call; it came up in during
+      # discussion in https://github.com/SciRuby/nmatrix/issues/374
+      NMatrix::BLAS::cblas_trsm(:row, :left, uplo, false, :nounit, 
+                              b.shape[0], b.shape[1], 1.0, self, self.shape[0],
+                              b, b.shape[1])
+      return b
+    end
   end
 end
