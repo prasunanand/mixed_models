@@ -79,12 +79,12 @@ class NMatrix
   #
   def triangular_solve(uplo, rhs)
     raise(ArgumentError, "uplo should be :lower or :upper") unless uplo == :lower or uplo == :upper
-    b = rhs.clone
+    # b = rhs.clone
     if jruby?
       # puts self
       # puts b
       # puts self.matrix_solve b
-      return self.matrix_solve b
+      return self.matrix_solve rhs
     else
       # this is the correct function call; it came up in during
       # discussion in https://github.com/SciRuby/nmatrix/issues/374

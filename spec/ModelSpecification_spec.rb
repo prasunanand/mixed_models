@@ -1,4 +1,4 @@
-require 'mixed_models'
+require '../lib/mixed_models'
 
 RSpec.describe MixedModels do
   describe "#mk_ran_ef_model_matrix" do

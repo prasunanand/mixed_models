@@ -1,4 +1,4 @@
-require 'mixed_models'
+require '../lib/mixed_models'
 
 describe LMM do
   ["#from_formula", "#from_daru"].each do |constructor_method|

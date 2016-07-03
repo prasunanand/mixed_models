@@ -1,4 +1,4 @@
-require 'mixed_models'
+require '../lib/mixed_models'
 
 RSpec.describe MixedModels::LMMFormula do
   it "produces LMM#from_daru input" do

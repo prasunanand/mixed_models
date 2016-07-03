@@ -1,4 +1,4 @@
-require 'mixed_models'
+require_relative '../lib/mixed_models'
 
 RSpec.describe MixedModels do
   before :each do

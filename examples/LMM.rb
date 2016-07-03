@@ -45,19 +45,20 @@ y = (x.dot beta) + n + epsilon
 
 puts  "==========    y   =================================="
 puts y
+puts "======================================================"
+puts z
+k = (z*5).transpose
+n = k/5
+puts "======================================================"
 
 # Set up the covariance parameters
 parametrization = Proc.new do |th| 
   diag_blocks = Array.new(5) { NMatrix.new([2,2], [th[0],th[1],0,th[2]], dtype: :float64) }
   n = NMatrix.block_diagonal(*diag_blocks, dtype: :float64) 
-  puts  "==========    NMatrix   =================================="
-  puts n
-  puts  "==========    NMatrix   =================================="
-  n
 end
 
 # Fit the model
-model_fit = LMM.new(x: x, y: y, zt: z.transpose,
+model_fit = LMM.new(x: x, y: y, zt: n,
                     start_point: [1,0,1], 
                     lower_bound: Array[0,-Float::INFINITY,0],
                     &parametrization) 

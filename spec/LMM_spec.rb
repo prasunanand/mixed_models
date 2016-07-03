@@ -1,4 +1,4 @@
-require 'mixed_models'
+require_relative '../lib/mixed_models'
 
 #TODO: add better spec for LMM#sigma_mat; add spec for LMM#residuals, LMM#sse
 
